@@ -1,6 +1,7 @@
 package com.pamarthi.api.services;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -19,10 +20,12 @@ public class GoogleApiServiceImpl implements GoogleApiService {
 	public static final String PLACE_BY_ID_URL = "https://maps.googleapis.com/maps/api/place/details/json?place_id=%s&key=%s";
 	public static final String KEY = "AIzaSyA7ehIlzll-6Kci9hVhY6GsYXOF3J3HVeI";
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public String searchPlace(String test) throws NotFoundException {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		try {
+			test = URLEncoder.encode(test);
 			HttpGet request = new HttpGet(String.format(PLACE_URL, test, KEY));
 			CloseableHttpResponse response = httpClient.execute(request);
 			try {
